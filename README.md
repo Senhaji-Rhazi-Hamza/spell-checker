@@ -13,7 +13,7 @@ This project is using the CMake build system.
 ### In-Source build
 
 ```sh
-cmake .
+cmake ..
 make
 ```
 
@@ -22,6 +22,7 @@ make
 ```sh
 mkdir build && cd build
 cmake .
+cmake . -DCMAKE_BUILD_TYPE=Release
 make
 ```
 
