@@ -52,12 +52,15 @@ void
 trie<key_type, data_type>::
 print(std::ostream& out, std::vector<res_data> &v)
 {
-  out <<"[";
-  for (auto it = v.begin() ; it != (v.end() - 1); ++it)
-    out<<"{\"word\":\"" << it->data.word << "\",\"freq\":"<<it->data.freq << ",\"distance\":"<<it->dist<<"},";
-  auto it = (v.end() - 1);
-  out<<"{\"word\":\"" << it->data.word << "\",\"freq\":"<<it->data.freq << ",\"distance\":"<<it->dist<<"}";
-  out <<"]" <<std::endl;
+  if (v.size() > 0)
+  {
+    out <<"[";
+    for (auto it = v.begin() ; it != (v.end() - 1); ++it)
+      out<<"{\"word\":\"" << it->data.word << "\",\"freq\":"<<it->data.freq << ",\"distance\":"<<it->dist<<"},";
+    auto it = (v.end() - 1);
+    out<<"{\"word\":\"" << it->data.word << "\",\"freq\":"<<it->data.freq << ",\"distance\":"<<it->dist<<"}";
+    out <<"]" <<std::endl;
+  }
 }
 
 /** 
@@ -194,13 +197,14 @@ search_dist(int dist, std::vector<res_data> &v,trie_node_ptr<char> cur_node,std:
 {
   //stille have to handle case when the word is tooo big for the trie
   size_t cal_dis = 0;
-  if (dist == 0)
+ /* if (dist == -1)
   {
     word_data d = search(word);
+    //std::cout << "d.word " << d.word <<std::endl;
     if (d.freq)
       v.push_back({d, 0});
     return v;
-  }
+  }*/
   if (tmp.size() < this->depth_)
   {
     if ((cur_node->get_final_node()) && ((cal_dis = lev_dam_dist(this->words_datatypes[cur_node->get_id()].word, word)) <= dist))
@@ -254,7 +258,7 @@ search_dist(int dist, std::vector<res_data> &v,trie_node_ptr<char> cur_node,std:
  * @param tmp
  * is an accumulator, when you prob your tri it construct the according word
  * @return 
-**/
+ **/
 template<typename key_type, typename data_type>
 void
 trie<key_type, data_type>::
